@@ -116,5 +116,74 @@ RSpec.describe Game, type: :model do
       game_w_questions.current_level = 2
       expect(game_w_questions.previous_level).to eq(1) 
     end
-  end    
+  end 
+
+  describe '#answer_current_question!' do
+
+    before do
+      game_w_questions.answer_current_question!(answer_key)
+    end
+
+    context 'when the answer is correct' do
+      let(:answer_key) { game_w_questions.current_game_question.correct_answer_key }
+
+
+      it 'correct answer should return true' do
+        expect(game_w_questions.answer_current_question!(answer_key)).to be true          
+      end
+
+      it "should return in_progress status" do
+        expect(game_w_questions.status).to eq(:in_progress)
+      end
+
+      it "game finish should return false" do
+        expect(game_w_questions.finished?).to be false
+      end
+
+      context 'when is the last answer (in a million)' do
+        let(:game_w_questions) { FactoryBot.create(:game_with_questions, user: user, current_level: Question::QUESTION_LEVELS.max) }
+
+        it "should return won status" do
+          expect(game_w_questions.status).to eq(:won)
+        end
+  
+        it "game finish should return true" do
+          expect(game_w_questions.finished?).to be true
+        end
+
+        it "must contain the final prize 1000000" do
+          expect(game_w_questions.prize).to eq(1000000)
+        end
+        
+      end
+  
+      context 'when the answer is given after the expiration of time' do
+        let(:game_w_questions) { FactoryBot.create(:game_with_questions, user: user, created_at: 1.hour.ago) }
+
+        it "should return timeout status" do
+          expect(game_w_questions.status).to eq(:timeout)
+        end
+
+        it "game finish should return true" do
+          expect(game_w_questions.finished?).to be true
+        end
+      end
+    end
+
+    context 'when the answer is wrong' do
+      let(:answer_key) { (%w(a b c d) - [game_w_questions.current_game_question.correct_answer_key]).sample }
+
+      it 'wrong answer should return false' do
+        expect(game_w_questions.answer_current_question!(answer_key)).to be false          
+      end
+
+      it "should return fail status" do
+        expect(game_w_questions.status).to eq(:fail)
+      end
+
+      it "game finish should return true" do
+        expect(game_w_questions.finished?).to be true
+      end
+    end 
+  end
 end
