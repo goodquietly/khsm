@@ -21,9 +21,8 @@ RSpec.feature 'USER creates a game', type: :feature do
   end
 
   # Перед началом любого сценария нам надо авторизовать пользователя
-  before(:each) do
-    login_as user
-  end
+  
+  before { login_as user } 
 
   # Сценарий успешного создания игры
   scenario 'successfully' do
@@ -49,5 +48,6 @@ RSpec.feature 'USER creates a game', type: :feature do
     # save_and_open_page
     # но в конечном коде (который вы кладете в репозиторий)
     # этого кода быть не должно, также, как и byebug
+    save_and_open_page
   end
 end
