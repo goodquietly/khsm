@@ -119,14 +119,12 @@ RSpec.describe Game, type: :model do
   end 
 
   describe '#answer_current_question!' do
-
     before do
       game_w_questions.answer_current_question!(answer_key)
     end
 
     context 'when the answer is correct' do
       let(:answer_key) { game_w_questions.current_game_question.correct_answer_key }
-
 
       it 'correct answer should return true' do
         expect(game_w_questions.answer_current_question!(answer_key)).to be true          
@@ -153,8 +151,7 @@ RSpec.describe Game, type: :model do
 
         it "must contain the final prize 1000000" do
           expect(game_w_questions.prize).to eq(1000000)
-        end
-        
+        end 
       end
   
       context 'when the answer is given after the expiration of time' do
@@ -171,7 +168,7 @@ RSpec.describe Game, type: :model do
     end
 
     context 'when the answer is wrong' do
-      let(:answer_key) { (%w(a b c d) - [game_w_questions.current_game_question.correct_answer_key]).sample }
+      let(:answer_key) { (%w[a b c d] - [game_w_questions.current_game_question.correct_answer_key]).sample }
 
       it 'wrong answer should return false' do
         expect(game_w_questions.answer_current_question!(answer_key)).to be false          
