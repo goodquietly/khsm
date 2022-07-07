@@ -136,6 +136,7 @@ RSpec.describe GamesController, type: :controller do
       end
 
       it 'new game not created' do
+        request.env['HTTP_REFERER'] = 'http://test.com/'
         expect { post :create }.to change(Game, :count).by(0)
       end
 

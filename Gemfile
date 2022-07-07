@@ -7,7 +7,7 @@ gem 'rails', '~> 4.2.6'
 # Удобная админка для управления любыми сущностями
 gem 'rails_admin'
 
-gem 'devise', '~> 4.1.1'
+gem 'devise'
 gem 'devise-i18n'
 
 gem 'uglifier', '>= 1.3.0'
