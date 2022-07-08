@@ -276,7 +276,7 @@ RSpec.describe GamesController, type: :controller do
     context 'when authorized user' do
       before { sign_in user }
 
-      context 'uses audience help' do
+      context 'uses help' do
         it "current question's audience_help is missing from help_hash" do
           expect(game_w_questions.current_game_question.help_hash[:audience_help]).not_to be
         end
@@ -285,7 +285,15 @@ RSpec.describe GamesController, type: :controller do
           expect(game_w_questions.audience_help_used).to be false
         end
 
-        context 'after use help' do
+        it "current question's fifty_fifty_help is missing from help_hash" do
+          expect(game_w_questions.current_game_question.help_hash[:fifty_fifty]).not_to be
+        end
+
+        it 'fifty_fifty help not used' do
+          expect(game_w_questions.fifty_fifty_used).to be false
+        end
+
+        context 'after use audience help' do
           before do
             put :help, id: game_w_questions.id, 
             help_type: :audience_help
@@ -307,6 +315,39 @@ RSpec.describe GamesController, type: :controller do
 
           it 'audience help contains keys a, b, c, d' do
             expect(game.current_game_question.help_hash[:audience_help].keys).to contain_exactly('a', 'b', 'c', 'd')
+          end
+
+          it 'redirect to game path' do
+            expect(response).to redirect_to(game_path(game))
+          end
+        end
+
+        context 'after use fifty_fifty help' do
+          before do
+            put :help, id: game_w_questions.id, 
+            help_type: :fifty_fifty
+          end
+
+          let(:game) { assigns(:game) }
+      
+          it 'game not finished' do
+            expect(game.finished?).to be false
+          end
+
+          it 'fifty_fifty help used, return true' do
+            expect(game.fifty_fifty_used).to be true
+          end
+
+          it "the current question's fifty_fifty help is present in help_hash" do
+            expect(game.current_game_question.help_hash[:fifty_fifty]).to be
+          end
+
+          it 'fifty_fifty help must return an array' do
+            expect(game.current_game_question.help_hash[:fifty_fifty]).to be_an(Array)
+          end
+
+          it 'fifty_fifty help contains 2 answers' do
+            expect(game.current_game_question.help_hash[:fifty_fifty].size).to eq(2)
           end
 
           it 'redirect to game path' do
