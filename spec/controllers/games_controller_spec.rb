@@ -165,7 +165,6 @@ RSpec.describe GamesController, type: :controller do
         end
       end
     
-    
       context 'try to create second game' do
         let(:game) { assigns(:game) }
 
