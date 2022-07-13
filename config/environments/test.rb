@@ -47,6 +47,4 @@ Rails.application.configure do
   config.assets.debug = true
   config.asset_host   = 'http://localhost:3000'
   config.static_cache_control = 'public, max-age=3600'
-
 end
-
