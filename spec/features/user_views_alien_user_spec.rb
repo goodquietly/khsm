@@ -8,14 +8,12 @@ RSpec.feature 'USER views alien user', type: :feature do
       [FactoryBot.create(
         :game,
         user: alien_user,
-        id: 888, 
         created_at: Time.parse('2022.01.09, 13:00'), 
         current_level: 55, 
         prize: 15000
       ), FactoryBot.create(
         :game, 
         user: alien_user,
-        id: 999, 
         created_at: Time.parse('2022.02.10, 15:00'),
         finished_at: Time.parse('2022.02.10, 15:15'),
         is_failed: true,
@@ -38,9 +36,6 @@ RSpec.feature 'USER views alien user', type: :feature do
     expect(page).to have_content 'Вадик'
     expect(page).to have_content 'Алексей - 1 000 000 ₽'
 
-    expect(page).to have_content '888'
-    expect(page).to have_content '999'
-
     expect(page).to have_content "55"
 
     expect(page).to have_content 'в процессе'
@@ -49,7 +44,6 @@ RSpec.feature 'USER views alien user', type: :feature do
     expect(page).to have_content '10 февр., 15:00'
     expect(page).to have_content '09 янв., 13:00'
 
-    expect(page).to have_content '0 ₽'
     expect(page).to have_content '15 000 ₽'
 
     expect(page).to have_content '50/50'
