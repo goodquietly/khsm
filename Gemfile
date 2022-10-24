@@ -7,6 +7,7 @@ gem 'rails', '~> 4.2.6'
 gem 'rails_admin'
 gem 'devise'
 gem 'devise-i18n'
+gem 'dotenv-rails'
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'twitter-bootstrap-rails'
@@ -26,5 +27,5 @@ end
 
 group :production do
   gem 'rails_12factor'
-  gem 'pg'
+  gem 'pg', '~> 0.15'
 end
