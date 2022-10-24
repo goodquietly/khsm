@@ -151,21 +151,11 @@ end
     return :in_progress unless finished?
 
     if is_failed
-      # todo: дорогой ученик!
-      # Если TIME_LIMIT в будущем изменится, статусы старых, уже сыгранных игр
-      # могут измениться. Подумайте как это пофиксить!
-      # Ответ найдете в файле настроек вашего тестового окружения
-      if (finished_at - created_at) <= TIME_LIMIT
-        :fail
-      else
-        :timeout
-      end
+      (finished_at - created_at) > TIME_LIMIT ? :timeout : :fail
+    elsif current_level > Question::QUESTION_LEVELS.max
+      :won
     else
-      if current_level > Question::QUESTION_LEVELS.max
-        :won
-      else
-        :money
-      end
+      :money      
     end
   end
 
