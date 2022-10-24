@@ -16,6 +16,7 @@ module Billionaire
     config.i18n.fallbacks = [:en]
 
     config.time_zone = 'Moscow'
+    config.assets.initialize_on_precompile = false
 
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
