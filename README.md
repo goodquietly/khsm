@@ -71,7 +71,7 @@ bundle exec rspec
 bundle exec rails s
 ```
 
-В брайзере перейдите по ссылке:
+В браузере перейдите по ссылке:
 
 ```
 http://localhost:3000
