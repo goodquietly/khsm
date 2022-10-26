@@ -48,6 +48,7 @@ RSpec.feature 'USER views alien user', type: :feature do
 
     expect(page).to have_content '50/50'
 
-    save_and_open_page
+    # При тестировании можно использовать метод
+    # save_and_open_page
   end
 end
