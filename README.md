@@ -41,7 +41,7 @@ gem install bundler
 git clone https://github.com/goodquietly/khsm.git
 ```
 
-Находясь в папке с игрой `cd khsm`, установите бибилиотеки:
+Находясь в папке с игрой `cd khsm`, установите библиотеки:
 
 ```
 bundle install
